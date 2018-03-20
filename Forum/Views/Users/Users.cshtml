@@ -1,0 +1,14 @@
+﻿@{
+	Layout = "../Shared/_Layout.cshtml";
+}
+
+@section scripts{
+	<script src="~/Scripts/users/Users.js"></script>
+	<script src="~/Scripts/users/UserListController.js"></script>  
+}
+
+<div ng-app="users" class="row">
+	<div ng-controller="UserListController" class="row">
+		{{message}}
+	</div>  
+</div>

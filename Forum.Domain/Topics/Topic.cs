@@ -13,7 +13,7 @@ namespace Forum.Domain.Topics
 		public int TypeId { get; set; }
 		public TopicType Type { get; set; }
 
-		public int CreatedUserId { get; set; }
+		public string CreatedUserId { get; set; }
 		public UserProfile CreatedUser { get; set; }
 
 		public DateTime CreatedDateTime { get; set; }

@@ -60,7 +60,7 @@ namespace Forum.Core.Services
 					TypeName = x.Type.Name,
 					CountMessage = x.Messages.Count,
 					LastMessageDateTime = x.Messages.OrderByDescending(m => m.CreatedDateTime).Select(m => m.CreatedDateTime).FirstOrDefault(),
-					LastMessageUserNickname = x.Messages.OrderByDescending(m => m.CreatedDateTime).Select(m => m.User.Nickname).FirstOrDefault()
+					LastMessageUserName = x.Messages.OrderByDescending(m => m.CreatedDateTime).Select(m => m.User.UserName).FirstOrDefault()
 				}).ToList()
 			};
 		}

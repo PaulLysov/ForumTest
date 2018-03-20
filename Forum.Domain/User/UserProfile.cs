@@ -1,19 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using Forum.Domain.Base;
 using Forum.Domain.User.Roles;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Forum.Domain.User
 {
-	public class UserProfile : BaseEntity
+	public class UserProfile : IdentityUser
 	{
-		[StringLength(100)]
-		[DisplayName("Email")]
-		public string Email { get; set; }
-		[StringLength(50)]
-		[DisplayName("Nickname")]
-		public string Nickname { get; set; }
+		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<UserProfile> manager)
+		{
+			// Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+			var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+			// Add custom user claims here
+			return userIdentity;
+		}
 
 		public Role Role { get; set; }
 		public int RoleId { get; set; }

@@ -17,7 +17,7 @@ namespace Forum.Controllers
 	{
 		// GET: api/GetTopics
 		[ResponseType(typeof(TopicsViewModel))]
-		public IHttpActionResult GetTopics(TopicFilter filter)
+		public async Task<IHttpActionResult> GetTopics(TopicFilter filter)
 		{
 			var model = new TopicService().GetTopicsByFilter(filter);
 			if (model == null)
@@ -28,7 +28,7 @@ namespace Forum.Controllers
 
 		// POST: api/CreateTopic
 		[ResponseType(typeof(int))]
-		public IHttpActionResult CreateTopic(TopicItemViewModel topic)
+		public async Task<IHttpActionResult> CreateTopic(TopicItemViewModel topic)
 		{
 			var id = new TopicService().CreateNewTopic(topic);
 			if (id < 0)
