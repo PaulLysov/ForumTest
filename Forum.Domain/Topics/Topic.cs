@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Forum.Domain.Base;
 using Forum.Domain.Dictionary;
 using Forum.Domain.User;
@@ -16,5 +17,7 @@ namespace Forum.Domain.Topics
 		public UserProfile CreatedUser { get; set; }
 
 		public DateTime CreatedDateTime { get; set; }
+
+		public List<TopicMessage> Messages { get; set; } 
 	}
 }

@@ -70,6 +70,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Topics\Topic.cs" />
     <Compile Include="Topics\TopicMessage.cs" />
+    <Compile Include="Topics\TopicMessageRepository.cs" />
+    <Compile Include="Topics\TopicRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="User\Roles\RightDetailsAttribute.cs" />
     <Compile Include="User\Roles\Role.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="User\Roles\RoleType.cs" />
     <Compile Include="User\Roles\UserRights.cs" />
     <Compile Include="User\UserProfile.cs" />
+    <Compile Include="User\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
