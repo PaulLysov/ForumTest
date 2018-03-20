@@ -6,32 +6,40 @@ using Forum.Core.Helpers;
 using Forum.Core.Models.Topics;
 using Forum.Domain.Topics;
 using Forum.Domain.User;
+using Newtonsoft.Json;
+using Serilog;
 
 namespace Forum.Core.Services
 {
-	public class TopicService:ServiceBase
+	public class TopicService : ServiceBase
 	{
-		public TopicsViewModel CreateNewTopic(TopicItemViewModel data)
+		public int CreateNewTopic(TopicItemViewModel data)
 		{
-			var user = new UserRepository(UnitOfWork).GetById(UserHelper.CurrentUserId);
-			if (user == null)
-				throw new Exception("User not found!");
-
-			var newTopic = new Topic
+			try
 			{
-				CreatedDateTime = DateTime.Now,
-				Name = data.Name,
-				TypeId = data.TypeId,
-				CreatedUserId = UserHelper.CurrentUserId
-			};
+				var user = new UserRepository(UnitOfWork).GetById(UserHelper.CurrentUserId);
+				if (user == null)
+					throw new Exception("User not found!");
 
-			new TopicRepository(UnitOfWork).AddOrUpdate(newTopic);
-			UnitOfWork.SaveChanges();
+				var newTopic = new Topic
+				{
+					CreatedDateTime = DateTime.Now,
+					Name = data.Name,
+					TypeId = data.TypeId,
+					CreatedUserId = UserHelper.CurrentUserId
+				};
 
+				new TopicRepository(UnitOfWork).AddOrUpdate(newTopic);
+				UnitOfWork.SaveChanges();
 
-			return new TopicsViewModel();
-
-		} 
+				return newTopic.Id;
+			}
+			catch (Exception ex)
+			{
+				Log.Logger.Error(ex,$"[TopicService][CreateNewTopic] Error at create new topic. data inputted  = [{JsonConvert.SerializeObject(data)}]");
+				return -1;
+			}
+		}
 
 		public TopicsViewModel GetTopicsByFilter(TopicFilter filter)
 		{
@@ -39,7 +47,7 @@ namespace Forum.Core.Services
 			if (!string.IsNullOrEmpty(filter.TopicName))
 				query = query.Where(x => x.Name.Contains(filter.TopicName));
 
-			if(filter.TopicType.HasValue)
+			if (filter.TopicType.HasValue)
 				query = query.Where(x => x.TypeId == filter.TopicType.Value);
 
 			return new TopicsViewModel
@@ -51,9 +59,9 @@ namespace Forum.Core.Services
 					Name = x.Name,
 					TypeName = x.Type.Name,
 					CountMessage = x.Messages.Count,
-					LastMessageDateTime = x.Messages.OrderByDescending(m =>m.CreatedDateTime).Select(m => m.CreatedDateTime).FirstOrDefault(),
-					LastMessageUserNickname = x.Messages.OrderByDescending(m =>m.CreatedDateTime).Select(m => m.User.Nickname).FirstOrDefault()
-				} ).ToList()
+					LastMessageDateTime = x.Messages.OrderByDescending(m => m.CreatedDateTime).Select(m => m.CreatedDateTime).FirstOrDefault(),
+					LastMessageUserNickname = x.Messages.OrderByDescending(m => m.CreatedDateTime).Select(m => m.User.Nickname).FirstOrDefault()
+				}).ToList()
 			};
 		}
 

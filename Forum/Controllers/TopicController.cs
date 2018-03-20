@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,7 +17,7 @@ namespace Forum.Controllers
 	{
 		// GET: api/GetTopics
 		[ResponseType(typeof(TopicsViewModel))]
-		public async Task<IHttpActionResult> GetTopics(TopicFilter filter)
+		public IHttpActionResult GetTopics(TopicFilter filter)
 		{
 			var model = new TopicService().GetTopicsByFilter(filter);
 			if (model == null)
@@ -24,5 +25,16 @@ namespace Forum.Controllers
 
 			return this.Ok(model);
 		}
+
+		// POST: api/CreateTopic
+		[ResponseType(typeof(int))]
+		public IHttpActionResult CreateTopic(TopicItemViewModel topic)
+		{
+			var id = new TopicService().CreateNewTopic(topic);
+			if (id < 0)
+				return this.BadRequest("Topic not created");
+
+			return this.Ok(id);
+		}	
 	}
 }

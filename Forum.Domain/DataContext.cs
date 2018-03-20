@@ -61,7 +61,7 @@ namespace Forum.Domain
 
 			modelBuilder.Entity<TopicMessage>().ToTable("TopicMessages");
 			modelBuilder.Entity<TopicMessage>().HasRequired(t => t.User).WithMany().HasForeignKey(t => t.UserId);
-			modelBuilder.Entity<TopicMessage>().HasRequired(t => t.Topic).WithMany().HasForeignKey(t => t.TopicId);
+			modelBuilder.Entity<TopicMessage>().HasRequired(t => t.Topic).WithMany(t => t.Messages).HasForeignKey(t => t.TopicId);
 			#endregion
 		}
 	}
