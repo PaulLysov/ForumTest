@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Forum.Core.Models.Users;
 using Forum.Domain.User;
+using Forum.Domain.User.Roles;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Forum.Core.Services
 {
@@ -17,6 +20,16 @@ namespace Forum.Core.Services
 				Email = x.Email,
 				Login = x.UserName
 			} ).ToList();
+		}
+
+		public UserProfile GetUserByEmail(string mail)
+		{
+			return new UserRepository(UnitOfWork).GetQuery().FirstOrDefault(x =>x.Email.Contains(mail));
+		}
+
+		public IdentityUser GetUserById(string userId)
+		{
+			return new UserRepository(UnitOfWork).GetById(userId);
 		}
 	}
 }
