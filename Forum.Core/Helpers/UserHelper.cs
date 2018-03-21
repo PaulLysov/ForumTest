@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using Forum.Domain;
 using Forum.Domain.User;
 using Forum.Domain.User.Roles;
 using Microsoft.AspNet.Identity;
+using WebMatrix.WebData;
 
 namespace Forum.Core.Helpers
 {
@@ -12,7 +14,7 @@ namespace Forum.Core.Helpers
 		#region Name of session parameters 
 		private const string UserRightsSessionParameterName = "UserAvailableRights";
 		private const string UserRoleSessionParameterName = "UserRole";
-		
+
 		#endregion
 
 		#region bool loaded parameters into session 
@@ -25,10 +27,10 @@ namespace Forum.Core.Helpers
 		public static string CurrentUserLogin => HttpContext.Current.User.Identity.Name;
 		public static int CurrentUserId => HttpContext.Current.User.Identity.GetUserId<int>();
 
-		public static List<UserRights> UserRights => UserRightsLoaded ? (List<UserRights>) HttpContext.Current.Session[UserRightsSessionParameterName] : LoadUserRightsIntoSession();
-		
-		public static RoleType UserRole => UserRoleLoaded ? (RoleType) HttpContext.Current.Session[UserRoleSessionParameterName] : LoadUserRoleIntoSession();
-		#endregion		
+		public static List<UserRights> UserRights => UserRightsLoaded ? (List<UserRights>)HttpContext.Current.Session[UserRightsSessionParameterName] : LoadUserRightsIntoSession();
+
+		public static RoleType UserRole => UserRoleLoaded ? (RoleType)HttpContext.Current.Session[UserRoleSessionParameterName] : LoadUserRoleIntoSession();
+		#endregion
 
 		#region private methods 
 		private static List<UserRights> LoadUserRightsIntoSession()
@@ -36,21 +38,48 @@ namespace Forum.Core.Helpers
 			using (var unitOfwork = new UnitOfWork())
 			{
 				var rights = new UserRepository(unitOfwork).GetUserRights(CurrentUserId);
-				return (List<UserRights>) (HttpContext.Current.Session[UserRightsSessionParameterName] = rights);
+				return (List<UserRights>)(HttpContext.Current.Session[UserRightsSessionParameterName] = rights);
 			}
 		}
 		private static RoleType LoadUserRoleIntoSession()
 		{
 			var currentUserId = CurrentUserId;
 			if (CurrentUserId < 0)
-				return (RoleType) (-1);
+				return (RoleType)(-1);
 
 			using (var unitOfWork = new UnitOfWork())
 			{
-				var role = (RoleType) new UserRepository(unitOfWork).GetUserRoleId(currentUserId);
-				return (RoleType) (HttpContext.Current.Session[UserRoleSessionParameterName] = role);
+				var role = (RoleType)new UserRepository(unitOfWork).GetUserRoleId(currentUserId);
+				return (RoleType)(HttpContext.Current.Session[UserRoleSessionParameterName] = role);
 			}
 		}
-#endregion
+
+		public static bool IsCurrentUserHasRight(UserRights right)
+		{
+			if (!WebSecurity.IsAuthenticated)
+				return false;
+
+			if (!UserRightsLoaded)
+			{
+				LoadUserRightsIntoSession();
+			}
+
+			return UserRights.Any(it => it == right);
+		}
+
+		public static bool IsCurrentUserHasAnyRight(IEnumerable<UserRights> rights)
+		{
+			if (!WebSecurity.IsAuthenticated)
+				return false;
+
+			if (!UserRightsLoaded)
+			{
+				LoadUserRightsIntoSession();
+			}
+
+			return UserRights.Any(cr => rights.Any(ar => ar == cr));
+		}
+
+		#endregion
 	}
 }

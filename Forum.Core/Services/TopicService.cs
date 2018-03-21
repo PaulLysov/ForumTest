@@ -59,8 +59,8 @@ namespace Forum.Core.Services
 					Name = x.Name,
 					TypeName = x.Type.Name,
 					CountMessage = x.Messages.Count,
-					LastMessageDateTime = x.Messages.OrderByDescending(m => m.CreatedDateTime).Select(m => m.CreatedDateTime).FirstOrDefault(),
-					LastMessageUserLogin = x.Messages.OrderByDescending(m => m.CreatedDateTime).Select(m => m.User.Login).FirstOrDefault()
+					LastMessageDateTime = x.Messages.OrderByDescending(m => m.CreateDateTime).Select(m => m.CreateDateTime).FirstOrDefault(),
+					LastMessageUserLogin = x.Messages.OrderByDescending(m => m.CreateDateTime).Select(m => m.User.Login).FirstOrDefault()
 				}).ToList()
 			};
 		}

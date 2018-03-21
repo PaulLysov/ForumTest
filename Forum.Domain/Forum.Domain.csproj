@@ -70,9 +70,9 @@
     <Compile Include="Base\BaseEntityRepository.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Dictionary\TopicType.cs" />
-    <Compile Include="Migrations\201803210905501_TheBeginning.cs" />
-    <Compile Include="Migrations\201803210905501_TheBeginning.Designer.cs">
-      <DependentUpon>201803210905501_TheBeginning.cs</DependentUpon>
+    <Compile Include="Migrations\201803211917024_TheBeginning.cs" />
+    <Compile Include="Migrations\201803211917024_TheBeginning.Designer.cs">
+      <DependentUpon>201803211917024_TheBeginning.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,8 +94,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803210905501_TheBeginning.resx">
-      <DependentUpon>201803210905501_TheBeginning.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803211917024_TheBeginning.resx">
+      <DependentUpon>201803211917024_TheBeginning.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

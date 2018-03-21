@@ -17,8 +17,8 @@ namespace Forum.Domain.Topics
 		public int UserId { get; set; }
 		public UserProfile User { get; set; }
 
-		public DateTime CreatedDateTime { get; set; }
-		public DateTime? EditedDateTime { get; set; }
-		public DateTime? ModeratedDateTime { get; set; }
+		public DateTime CreateDateTime { get; set; }
+		public DateTime? EditDateTime { get; set; }
+		public DateTime? ModerateDateTime { get; set; }
 	}
 }

@@ -1,0 +1,20 @@
+﻿@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Registration</h2>
+
+<div ng-controller="RegistrationController">
+	<form ng-submit="register()">
+		<label for="emailAddress">Email Address:</label>
+		<input type="text" ng-model="registerForm.email" id="emailAddress" required />
+
+		<label for="password">Password:</label>
+		<input type="password" id="password" ng-model="registerForm.password" required/>
+
+		<label for="password">Confirm Password:</label>
+		<input type="password" id="confirmPassword" ng-model="registerForm.confirmPassword" required />
+
+		<button type="submit">Registration</button>
+	</form>
+</div>

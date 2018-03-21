@@ -54,9 +54,9 @@ namespace Forum.Domain.Migrations
                         TopicId = c.Int(nullable: false),
                         Message = c.String(maxLength: 255),
                         UserId = c.Int(nullable: false),
-                        CreatedDateTime = c.DateTime(nullable: false),
-                        EditedDateTime = c.DateTime(),
-                        ModeratedDateTime = c.DateTime(),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        EditDateTime = c.DateTime(),
+                        ModerateDateTime = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Topics", t => t.TopicId, cascadeDelete: false)

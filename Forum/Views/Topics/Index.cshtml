@@ -1,5 +1,11 @@
 ﻿
-<div ng-app="AngularMVCApp" ng-controller="TopicsPageController">
+@{
+	Layout = "../Shared/_Layout.cshtml";
+}
+
+<h2>Topics</h2>
+
+<div  ng-controller="TopicsPageController">
 
 	<div class="row" ng-repeat="entry in models.Topics">
 		<div class="col-md-4">{{entry.Name}}</div>

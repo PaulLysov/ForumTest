@@ -2,32 +2,37 @@
 {
 	public enum UserRights
 	{
+		Unknown = 0,
+
 		#region forum 
 		[RightDetails(Description = "Создание разделов", Category = "Разделы")]
-		SectionCreate = 0,
+		SectionCreate = 1,
 		[RightDetails(Description = "Удаление разделов", Category = "Разделы")]
-		SectionRemove = 1,
+		SectionRemove = 2,
 		[RightDetails(Description = "Создание тем", Category = "Темы")]
-		TopicCreate = 2,
+		TopicCreate = 3,
 		[RightDetails(Description = "Удаление тем", Category = "Темы")]
-		TopicRemove = 3,
+		TopicRemove = 4,
 		[RightDetails(Description = "Просмотр сообщений не прошедщих модерацию", Category = "Сообщения")]
-		MessageShowNotModerate = 4,
+		MessageShowNotModerate = 5,
 		[RightDetails(Description = "Модерация сообщений", Category = "Сообщения")]
-		MessageModerate = 5,
+		MessageModerate = 6,
 
 		#endregion forum
 
 		#region users
 
-		[RightDetails(Description = "Создание пользователей", Category = "Пользователи")]
-		UserCreating = 6,
-		[RightDetails(Description = "Редактирование пользователей", Category = "Пользователи")]
-		UserEditing = 7,
-		[RightDetails(Description = "Удаление пользователей", Category = "Пользователи")]
-		UserDeleting = 8,
-		[RightDetails(Description = "Блокировка пользователей", Category = "Пользователи")]
-		UserBlocking = 9,
+		[RightDetails(Description = "Создание пользователей", Category = "Users")]
+		UserCreating = 7,
+		[RightDetails(Description = "Редактирование пользователей", Category = "Users")]
+		UserEditing = 8,
+		[RightDetails(Description = "Удаление пользователей", Category = "Users")]
+		UserDeleting = 9,
+		[RightDetails(Description = "Блокировка пользователей", Category = "Users")]
+		UserBlocking = 10,
+
+		[RightDetails(Description = "Сan see the list of users", Category = "Users")]
+		UserListShow = 11,
 
 		#endregion users
 	}
