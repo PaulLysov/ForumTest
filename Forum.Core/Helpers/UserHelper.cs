@@ -23,7 +23,7 @@ namespace Forum.Core.Helpers
 
 		#region public parameters
 		public static string CurrentUserLogin => HttpContext.Current.User.Identity.Name;
-		public static string CurrentUserId => HttpContext.Current.User.Identity.GetUserId<string>();
+		public static int CurrentUserId => HttpContext.Current.User.Identity.GetUserId<int>();
 
 		public static List<UserRights> UserRights => UserRightsLoaded ? (List<UserRights>) HttpContext.Current.Session[UserRightsSessionParameterName] : LoadUserRightsIntoSession();
 		
@@ -42,7 +42,7 @@ namespace Forum.Core.Helpers
 		private static RoleType LoadUserRoleIntoSession()
 		{
 			var currentUserId = CurrentUserId;
-			if (string.IsNullOrEmpty(CurrentUserId))
+			if (CurrentUserId < 0)
 				return (RoleType) (-1);
 
 			using (var unitOfWork = new UnitOfWork())

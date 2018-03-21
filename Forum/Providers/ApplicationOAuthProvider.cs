@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
 using Forum.Core.Services;
+using Forum.Domain.User;
 using Forum.Domain.User.Roles;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebMatrix.WebData;
 

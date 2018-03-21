@@ -22,13 +22,9 @@ namespace Forum
 		// For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
 		public void ConfigureAuth(IAppBuilder app)
 		{
-			// Configure the db context and user manager to use a single instance per request
-			app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-
-			// Configure the application for OAuth based flow
 			OAuthOptions = new OAuthAuthorizationServerOptions
 			{
-				AccessTokenExpireTimeSpan = new TimeSpan(24, 0, 0),
+				AccessTokenExpireTimeSpan = new System.TimeSpan(24, 0, 0),
 				TokenEndpointPath = new PathString("/Token"),
 				Provider = new ApplicationOAuthProvider(),
 				AllowInsecureHttp = true

@@ -4,7 +4,7 @@ using System.Linq;
 using Forum.Core.Models.Users;
 using Forum.Domain.User;
 using Forum.Domain.User.Roles;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Serilog;
 
 namespace Forum.Core.Services
 {
@@ -18,7 +18,7 @@ namespace Forum.Core.Services
 				Id = x.Id,
 				RoleId = x.RoleId,
 				Email = x.Email,
-				Login = x.UserName
+				Login = x.Login
 			} ).ToList();
 		}
 
@@ -27,9 +27,28 @@ namespace Forum.Core.Services
 			return new UserRepository(UnitOfWork).GetQuery().FirstOrDefault(x =>x.Email.Contains(mail));
 		}
 
-		public IdentityUser GetUserById(string userId)
+		public UserProfile GetUserById(int userId)
 		{
 			return new UserRepository(UnitOfWork).GetById(userId);
+		}
+
+		public void CreateUser(UserProfile user, RoleType roleType)
+		{
+			try
+			{
+				user.RoleId = (int) roleType;
+				new UserRepository(UnitOfWork).AddOrUpdate(user);
+
+
+
+				UnitOfWork.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				Log.Logger.Error(ex, "[UserService][CreateUser] Errors at create user");
+				UnitOfWork.Dispose();
+			}
+			
 		}
 	}
 }

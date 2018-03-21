@@ -11,7 +11,7 @@ namespace Forum.Core.Models.Topics
 		public int TypeId { get; set; }
 		public string TypeName { get; set; }
 
-		public string LastMessageUserName { get; set; }
+		public string LastMessageUserLogin { get; set; }
 		public DateTime? LastMessageDateTime { get; set; }
 	}
 }
