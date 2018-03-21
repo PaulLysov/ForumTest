@@ -29,7 +29,7 @@
 					@if (!WebSecurity.IsAuthenticated)
 					{
 						<li>@Html.ActionLink("Registration", "Registration", "Account")</li>
-						<li>@Html.ActionLink("Registration", "Login", "Account")</li>
+						<li>@Html.ActionLink("Login", "Login", "Account")</li>
 					}
 
 					@if (UserHelper.CurrentUserId > 0 && UserHelper.UserRole == RoleType.Admin)
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	<div class="container body-content">
-		<div class="row" style="padding-top: 25px;">
+		<div class="row">
 			@RenderBody()
 		</div>
 		<hr />

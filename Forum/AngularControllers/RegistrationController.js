@@ -11,4 +11,4 @@
 	}
 }
 
-LoginController.$inject = ['$scope', '$routeParams'];
+RegistrationController.$inject = ['$scope', '$routeParams'];
