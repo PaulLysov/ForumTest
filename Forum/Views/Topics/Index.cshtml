@@ -5,9 +5,26 @@
 
 <h2>Topics</h2>
 
-<div  ng-controller="TopicsPageController">
+<hr/>
 
-	<div class="row" ng-repeat="entry in models.Topics">
-		<div class="col-md-4">{{entry.Name}}</div>
-	</div>
+<hr/>
+<div class="row" ng-controller='TopicsPageController'>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="col-md-8">Topic name</th>
+				<th class="col-md-2">Count message</th>
+				<th class="col-md-2">Last message at ...</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="entry in models.Topics">
+				<td>{{entry.Name}}</td>
+				<td>{{entry.CountMessage}}</td>
+				<td>{{entry.LastUser}}</td>
+			</tr>
+		</tbody>
+	</table>
+
 </div>

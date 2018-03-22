@@ -19,3 +19,5 @@ textarea {
 .account-form .row {
 	padding: 5px 0 5px 0;
 }
+
+.error { color: red;}

@@ -25,7 +25,7 @@ namespace Forum.Domain.User
 		/// <summary>
 		/// user is blocked
 		/// </summary>
-		public bool LockoutEnabled { get;set; }
+		public bool? LockoutEnabled { get;set; }
 
 		#region personal info 
 		[StringLength(50)]
@@ -35,7 +35,8 @@ namespace Forum.Domain.User
 		[DisplayName("Фамилия")]
 		public string LastName { get; set; }
 		#endregion
+
 		public DateTime CreationDateTime { get; set; }
-		public DateTime LastLoginDateTime { get; set; }
+		public DateTime? LastLoginDateTime { get; set; }
 	}
 }

@@ -19,9 +19,25 @@ namespace Forum.ApiControllers
 {
 	[Authorize]
 	[RoutePrefix("api/Account")]
-	public class AccountApiController : ApiController
+	public class AccountController : ApiController
 	{
 		public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+
+		[HttpPost]
+		[Route("Login")]
+		[AllowAnonymous]
+		public async Task<IHttpActionResult> Login(LoginBindingModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			if (!WebSecurity.Login(model.Email, model.Password, model.RememberMe))
+				return BadRequest("Login failed");
+
+			return Ok(true);
+		}
 
 		// GET api/Account/UserInfo
 		[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
@@ -90,7 +106,7 @@ namespace Forum.ApiControllers
 				return BadRequest(ex.Message);
 			}
 
-			return Ok();
+			return Ok(true);
 		}
 
 		#region Helpers

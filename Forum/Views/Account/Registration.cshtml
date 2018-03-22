@@ -5,22 +5,27 @@
 <h2>Registration</h2>
 
 <div class="row" ng-controller="RegistrationController">
+
 	<form class="account-form" ng-submit="register()">
-		<div class="row" >
-			<label class="col-md-2" for="emailAddress">Email Address:</label>
-			<input type="text" ng-model="registerForm.email" id="emailAddress" required />
+		<div class="row">
+			<label class="col-sm-4 col-md-2" for="emailAddress">Email Address:</label>
+			<input class="col-md-4" type="text" ng-model="registerForm.email" id="emailAddress" required />
 		</div>
 
 		<div class="row">
-			<label class="col-md-2" for="password">Password:</label>
-			<input type="password" id="password" ng-model="registerForm.password" required />
+			<label class="col-sm-4 col-md-2" for="password">Password:</label>
+			<input class="col-md-4" type="password" id="password" ng-model="registerForm.password" required />
 		</div>
 
 		<div class="row">
-			<label class="col-md-2" for="confirmPassword">Confirm Password:</label>
-			<input type="password" id="confirmPassword" ng-model="registerForm.confirmPassword" required/>
+			<label class="col-sm-4 col-md-2" for="confirmPassword">Confirm Password:</label>
+			<input class="col-md-4" type="password" id="confirmPassword" ng-model="registerForm.confirmPassword" required />
 		</div>
 
 		<button type="submit">Registration</button>
-</form>
+	</form>
+
+	<div class="error" ng-if="registerForm.registerFailure">
+		Register failure
+	</div>
 </div>

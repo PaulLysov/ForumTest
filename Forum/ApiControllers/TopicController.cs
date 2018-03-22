@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using Forum.Core.Models.Topics;
 using Forum.Core.Services;
+using WebMatrix.WebData;
 
 namespace Forum.ApiControllers
 {
+	[Authorize]
 	public class TopicController : ApiController
 	{
 		// GET: api/Topic
@@ -15,30 +19,24 @@ namespace Forum.ApiControllers
 
 		//POST:
 		[HttpPost]
+		[AllowAnonymous]
+		[Route("GetTopicsByFilter")]
 		public TopicsViewModel GetTopicsByFilter(TopicFilter filter)
 		{
 			return new TopicService().GetTopicsByFilter(filter);
 		}
 
-		// GET: api/Topic/5
-		public string Get(int id)
+		[HttpPost]
+		[Route("AddTopic")]
+		public async Task<IHttpActionResult> AddTopic([FromBody]TopicItemViewModel model)
 		{
-			return "value";
-		}
+			if (!WebSecurity.IsAuthenticated)
+				return BadRequest("Not authorized");
 
-		// POST: api/Topic
-		public void Post([FromBody]string value)
-		{
-		}
+			if(new TopicService().AddTopic(model))
+					return BadRequest("Error at new topic added");
 
-		// PUT: api/Topic/5
-		public void Put(int id, [FromBody]string value)
-		{
-		}
-
-		// DELETE: api/Topic/5
-		public void Delete(int id)
-		{
-		}
+			return Ok();
+		} 
 	}
 }

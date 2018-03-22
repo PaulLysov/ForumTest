@@ -43,11 +43,10 @@ namespace Forum.Providers
 
 			try
 			{
-				if (user.LockoutEnabled)
+				if (user.LockoutEnabled.HasValue && user.LockoutEnabled.Value )
 					throw new Exception("Account is lockout");
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex){
 				context.SetError("invalid_grant", ex.Message);
 				return Task.FromResult<object>(null);
 			}

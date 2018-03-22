@@ -9,7 +9,6 @@
 	<meta name="viewport" content="width=device-width" />
 	<title>@ViewBag.Title</title>
 	@Styles.Render("~/Content/css")
-	@Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
@@ -23,7 +22,18 @@
 				<a></a>
 				@*@Html.ActionLink("Forum", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
 			</div>
-			<div class="navbar-collapse collapse">
+
+			<div>
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Forum", "Index", "Topics")</li>
+					@if (WebSecurity.IsAuthenticated && UserHelper.CurrentUserId > 0 && UserHelper.UserRole == RoleType.Admin)
+					{
+						<li>@Html.ActionLink("Users", "List", "Users")</li>
+					}
+				</ul>
+			</div>
+
+			<div style="float: right">
 				<ul class="nav navbar-nav">
 
 					@if (!WebSecurity.IsAuthenticated)
@@ -31,14 +41,7 @@
 						<li>@Html.ActionLink("Registration", "Registration", "Account")</li>
 						<li>@Html.ActionLink("Login", "Login", "Account")</li>
 					}
-
-					@if (UserHelper.CurrentUserId > 0 && UserHelper.UserRole == RoleType.Admin)
-					{
-						<li>@Html.ActionLink("Registration", "Login", "Account")</li>
-					}
-
-					@*<li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-						<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@</ul>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -47,16 +50,12 @@
 			@RenderBody()
 		</div>
 		<hr />
-		<footer>
-			<p>&copy; @DateTime.Now.Year</p>
-		</footer>
 	</div>
 
-
-	@Scripts.Render("~/bundles/jquery")
-	@Scripts.Render("~/bundles/bootstrap")
+	@*@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")*@
 	@Scripts.Render("~/bundles/AngularJs")
-	@Scripts.Render("~/bundles/AngularControllers")
+	@Scripts.Render("~/bundles/AngularApp")
 	@RenderSection("scripts", required: false)
 </body>
 </html>

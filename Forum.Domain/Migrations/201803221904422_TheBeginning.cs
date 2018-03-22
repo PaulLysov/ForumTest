@@ -36,11 +36,11 @@ namespace Forum.Domain.Migrations
                         Email = c.String(),
                         Login = c.String(),
                         RoleId = c.Int(nullable: false),
-                        LockoutEnabled = c.Boolean(nullable: false),
+                        LockoutEnabled = c.Boolean(),
                         FirstName = c.String(maxLength: 50),
                         LastName = c.String(maxLength: 50),
                         CreationDateTime = c.DateTime(nullable: false),
-                        LastLoginDateTime = c.DateTime(nullable: false),
+                        LastLoginDateTime = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: false)

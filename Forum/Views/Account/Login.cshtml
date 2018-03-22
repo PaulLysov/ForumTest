@@ -7,15 +7,25 @@
 <div class="row" ng-controller="LoginController">
 	<form class="account-form" ng-submit="login()">
 		<div class="row">
-			<label class="col-md-2" for="emailAddress">Email Address:</label>
-			<input type="text" ng-model="loginForm.email" id="emailAddress" required/>
+			<label class="col-md-2" for="email">Email Address:</label>
+			<input type="text" ng-model="loginForm.email" id="email" required/>
 		</div>
 
 		<div class="row">
 			<label class="col-md-2" for="password">Password:</label>
-			<input type="password" id="password" ng-model="loginForm.password" required />
+			<input type="password" id="password" ng-model="loginForm.password" required/>
 		</div>
-	
+
+		<div class="row">
+			<label class="col-md-2" for="rememberMe">Remember Me:</label>
+			<input type="checkbox" id="rememberMe" ng-model="loginForm.rememberMe" />
+		</div>
+
+
 		<button type="submit">Login</button>
+
+		<div class="error" ng-if="loginForm.loginFailure">
+			Login failure
+		</div>
 	</form>
 </div>

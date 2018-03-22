@@ -8,6 +8,7 @@ using Forum.Domain.Topics;
 using Forum.Domain.User;
 using Newtonsoft.Json;
 using Serilog;
+using WebMatrix.WebData;
 
 namespace Forum.Core.Services
 {
@@ -65,5 +66,29 @@ namespace Forum.Core.Services
 			};
 		}
 
+		public bool AddTopic(TopicItemViewModel model)
+		{
+			try
+			{
+				var entity = new Topic()
+				{
+					CreatedDateTime = DateTime.Now,
+					CreatedUserId = WebSecurity.CurrentUserId,
+					Name = model.Name,
+					TypeId = model.TypeId
+				};
+
+				new TopicRepository(UnitOfWork).AddOrUpdate(entity);
+				UnitOfWork.SaveChanges();
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Log.Logger.Error(ex, $"[{CurrentClassName}][AddTopic] Errors at new topic added!");
+				return false;
+			}
+			
+		}
 	}
 }

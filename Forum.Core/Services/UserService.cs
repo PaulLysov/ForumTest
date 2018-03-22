@@ -38,9 +38,6 @@ namespace Forum.Core.Services
 			{
 				user.RoleId = (int) roleType;
 				new UserRepository(UnitOfWork).AddOrUpdate(user);
-
-
-
 				UnitOfWork.SaveChanges();
 			}
 			catch (Exception ex)

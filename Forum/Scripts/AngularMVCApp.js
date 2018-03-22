@@ -1,25 +1,43 @@
-﻿var AngularMVCApp = angular.module('AngularMVCApp', []);
+﻿var AngularMVCApp = angular.module('AngularMVCApp', ['ngRoute']);
 
-AngularMVCApp.controller('LoginController', TopicsPageController);
-AngularMVCApp.controller('RegistrationController', TopicsPageController);
-AngularMVCApp.controller('TopicsPageController', TopicsPageController);
-AngularMVCApp.controller('UsersPageController', TopicsPageController);
+/////////////////////////////////////
+//controllers
+AngularMVCApp.controller('LoginController', LoginController);
+AngularMVCApp.controller('RegistrationController', RegistrationController);
 
-var configFunction = function ($routeProvider) {
+//topics
+AngularMVCApp.controller('TopicsListController', TopicsListController);
+AngularMVCApp.controller('AddTopicController', AddTopicController);
+
+//users
+AngularMVCApp.controller('UsersPageController', UsersPageController);
+
+//factories
+AngularMVCApp.factory('LoginFactory', LoginFactory);
+AngularMVCApp.factory('RegistrationFactory', RegistrationFactory);
+AngularMVCApp.factory('AuthHttpResponseInterceptor', AuthHttpResponseInterceptor);
+
+//configuration 
+var configFunction = function ($routeProvider, $httpProvider) {
 	$routeProvider.
         when('/login', {
-        	templateUrl: 'routesDemo/one'
+        	templateUrl: '/Account/Login',
+        	controller: LoginController
         })
 		.when('/registration', {
-			templateUrl: 'routesDemo/one'
+			templateUrl: '/Account/Registration',
+			controller: RegistrationController
 		})
         .when('/topics', {
-        	templateUrl: 'routesDemo/two'
+        	templateUrl: '/Topics/Index',
+        	controller: TopicsListController
         })
         .when('/users', {
-        	templateUrl: 'routesDemo/three'
+        	templateUrl: '/Users/List'
         });
-}
-configFunction.$inject = ['$routeProvider'];
 
-AwesomeAngularMVCApp.config(configFunction);
+	$httpProvider.interceptors.push('AuthHttpResponseInterceptor');
+}
+configFunction.$inject = ['$routeProvider', '$httpProvider'];
+
+AngularMVCApp.config(configFunction);
