@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using Forum.Core.Services;
 using Forum.Domain.User;
 using Forum.Domain.User.Roles;
@@ -15,55 +15,16 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using WebMatrix.WebData;
 
+
 namespace Forum.ApiControllers
 {
-	[Authorize]
-	[RoutePrefix("api/Account")]
-	public class AccountController : ApiController
+	public class AccountController : Controller
 	{
 		public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-		[HttpPost]
-		[Route("Login")]
-		[AllowAnonymous]
-		public async Task<IHttpActionResult> Login(LoginBindingModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
-
-			if (!WebSecurity.Login(model.Email, model.Password, model.RememberMe))
-				return BadRequest("Login failed");
-
-			return Ok(true);
-		}
-
-		// GET api/Account/UserInfo
-		[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-		[Route("UserInfo")]
-		public UserInfoViewModel GetUserInfo()
-		{
-			ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-			return new UserInfoViewModel
-			{
-				Email = User.Identity.GetUserName(),
-				HasRegistered = externalLogin == null,
-				LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
-			};
-		}
-
-		// POST api/Account/Logout
-		[Route("Logout")]
-		public IHttpActionResult Logout()
-		{
-			Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-			return Ok();
-		}
 
 		// POST api/Account/ChangePassword
-		[Route("ChangePassword")]
+		[System.Web.Http.Route("ChangePassword")]
 		public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
 		{
 			if (!ModelState.IsValid)
@@ -79,8 +40,8 @@ namespace Forum.ApiControllers
 
 
 		// POST api/Account/Register
-		[AllowAnonymous]
-		[Route("Register")]
+		[System.Web.Http.AllowAnonymous]
+		[System.Web.Http.Route("Register")]
 		public async Task<IHttpActionResult> Register(RegisterBindingModel model)
 		{
 			try

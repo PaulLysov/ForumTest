@@ -80,6 +80,12 @@ namespace Forum.Core.Helpers
 			return UserRights.Any(cr => rights.Any(ar => ar == cr));
 		}
 
+		public static void ResetCurrentUserSessionData()
+		{
+			HttpContext.Current.Session[UserRightsSessionParameterName] = null;
+			HttpContext.Current.Session[UserRoleSessionParameterName] = null;
+		}
+
 		#endregion
 	}
 }

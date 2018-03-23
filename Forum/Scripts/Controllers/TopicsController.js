@@ -1,4 +1,4 @@
-﻿var TopicsListController = function ($scope, $routeParams, TopicsListFactory) {
+﻿var TopicsListController = function ($scope, TopicsListFactory) {
 	$scope.models = {
 		Topics: [
 			{ Name: 'Test1', CountMessage: 20, LastUser: 'User1' },
@@ -13,7 +13,7 @@
 	};
 
 }
-TopicsListController.$inject = ['$scope', '$routeParams', 'TopicsListFactory'];
+TopicsListController.$inject = ['$scope', 'TopicsListFactory'];
 
 //add new topic
 var AddTopicController = function ($scope,  AddTopicFactory) {

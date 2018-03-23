@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
+using System.Web.Http.Description;
 using Forum.Core.Models.Topics;
 using Forum.Core.Services;
 using WebMatrix.WebData;
@@ -9,7 +9,7 @@ using WebMatrix.WebData;
 namespace Forum.ApiControllers
 {
 	[Authorize]
-	public class TopicController : ApiController
+	public class TopicsController : ApiController
 	{
 		// GET: api/Topic
 		public IEnumerable<string> Get()
@@ -17,13 +17,12 @@ namespace Forum.ApiControllers
 			return new string[] { "value1", "value2" };
 		}
 
-		//POST:
-		[HttpPost]
 		[AllowAnonymous]
 		[Route("GetTopicsByFilter")]
-		public TopicsViewModel GetTopicsByFilter(TopicFilter filter)
+		[ResponseType(typeof(TopicsViewModel))]
+		public async Task<IHttpActionResult>  GetTopicsByFilter(TopicFilter filter)
 		{
-			return new TopicService().GetTopicsByFilter(filter);
+			return Ok(new TopicService().GetTopicsByFilter(filter));
 		}
 
 		[HttpPost]

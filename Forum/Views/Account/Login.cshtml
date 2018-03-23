@@ -1,9 +1,4 @@
-﻿@{
-	Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h1>Login</h1>
-
+﻿
 <div class="row" ng-controller="LoginController">
 	<form class="account-form" ng-submit="login()">
 		<div class="row">
@@ -20,7 +15,6 @@
 			<label class="col-md-2" for="rememberMe">Remember Me:</label>
 			<input type="checkbox" id="rememberMe" ng-model="loginForm.rememberMe" />
 		</div>
-
 
 		<button type="submit">Login</button>
 

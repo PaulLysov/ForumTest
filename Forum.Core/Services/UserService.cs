@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Forum.Core.Models;
 using Forum.Core.Models.Users;
 using Forum.Domain.User;
 using Forum.Domain.User.Roles;
@@ -32,18 +33,29 @@ namespace Forum.Core.Services
 			return new UserRepository(UnitOfWork).GetById(userId);
 		}
 
-		public void CreateUser(UserProfile user, RoleType roleType)
+		public bool CreateUser(RegisterBindingModel user, RoleType roleType)
 		{
 			try
 			{
-				user.RoleId = (int) roleType;
-				new UserRepository(UnitOfWork).AddOrUpdate(user);
+				var entity = new UserProfile
+				{
+					Login = user.Email,
+					Email = user.Email,
+					CreationDateTime = DateTime.Now,
+					RoleId = (int) roleType
+				};
+
+				
+				new UserRepository(UnitOfWork).AddOrUpdate(entity);
 				UnitOfWork.SaveChanges();
+
+				return true;
 			}
 			catch (Exception ex)
 			{
 				Log.Logger.Error(ex, "[UserService][CreateUser] Errors at create user");
 				UnitOfWork.Dispose();
+				return false;
 			}
 			
 		}

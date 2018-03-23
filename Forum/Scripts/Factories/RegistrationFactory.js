@@ -16,7 +16,7 @@
 		};
 
 		$http.post(
-			'/api/Account/Register', {
+			'/Account/Register', {
 				Email: email,
 				Password: password,
 				ConfirmPassword: confirmPassword

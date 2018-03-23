@@ -16,7 +16,7 @@
 		};
 
 		$http.post(
-			'/api/Account/Login', {
+			'/Account/Login', {
 				Email: email,
 				Password: password,
 				RememberMe: rememberMe
