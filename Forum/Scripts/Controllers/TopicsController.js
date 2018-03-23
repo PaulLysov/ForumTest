@@ -27,6 +27,7 @@ var AddTopicController = function ($scope,  AddTopicFactory) {
 		var result = AddTopicFactory($scope.topicForm.name, $scope.topicForm.type);
 		result.then(function (result) {
 			if (result.success) {
+				//$location.url('/topics');
 				$location.path('/topics');
 			} else {
 				$scope.topicForm.isFailure = true;

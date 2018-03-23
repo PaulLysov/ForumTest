@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Forum.Providers;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using Forum.Providers;
-using Forum.Models;
 
 namespace Forum
 {
@@ -17,14 +10,12 @@ namespace Forum
 	{
 		public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-		public static string PublicClientId { get; private set; }
-
 		// For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
 		public void ConfigureAuth(IAppBuilder app)
 		{
 			OAuthOptions = new OAuthAuthorizationServerOptions
 			{
-				AccessTokenExpireTimeSpan = new System.TimeSpan(24, 0, 0),
+				AccessTokenExpireTimeSpan = new TimeSpan(24, 0, 0),
 				TokenEndpointPath = new PathString("/Token"),
 				Provider = new ApplicationOAuthProvider(),
 				AllowInsecureHttp = true

@@ -1,4 +1,4 @@
-﻿var RegistrationController = function ($scope, $routeParams, RegistrationFactory) {
+﻿var RegistrationController = function ($scope, $location, $routeParams, RegistrationFactory) {
 	$scope.registerForm = {
 		email: '',
 		password: '',
@@ -11,7 +11,8 @@
 		var result = RegistrationFactory($scope.registerForm.email, $scope.registerForm.password, $scope.registerForm.confirmPassword);
 		result.then(function (result) {
 			if (result.success) {
-				$location.path('/topics');
+				$location.url('/Account/Login');
+				//$location.path('/login');
 			} else {
 				$scope.registerForm.registrationFailure = true;
 			}
@@ -19,4 +20,4 @@
 	}
 }
 
-RegistrationController.$inject = ['$scope', '$routeParams', 'RegistrationFactory'];
+RegistrationController.$inject = ['$scope', '$location', '$routeParams', 'RegistrationFactory'];

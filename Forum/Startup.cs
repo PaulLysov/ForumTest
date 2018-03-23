@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Forum;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Forum.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace Forum
 {

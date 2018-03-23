@@ -5,27 +5,29 @@
 AngularMVCApp.controller('LoginController', LoginController);
 AngularMVCApp.controller('RegistrationController', RegistrationController);
 
-//topics
 AngularMVCApp.controller('TopicsListController', TopicsListController);
 AngularMVCApp.controller('AddTopicController', AddTopicController);
 
-//users
 AngularMVCApp.controller('UsersPageController', UsersPageController);
 
 //factories
 AngularMVCApp.factory('LoginFactory', LoginFactory);
 AngularMVCApp.factory('RegistrationFactory', RegistrationFactory);
+
+AngularMVCApp.factory('AddTopicFactory', AddTopicFactory);
+AngularMVCApp.factory('TopicsListFactory', AddTopicFactory);
+
 AngularMVCApp.factory('AuthHttpResponseInterceptor', AuthHttpResponseInterceptor);
 
 //configuration 
 var configFunction = function ($routeProvider, $httpProvider) {
 	$routeProvider.
         when('/login', {
-        	templateUrl: '/Account/Login',
+        	templateUrl: '/Account/Login.cshtml',
         	controller: LoginController
         })
 		.when('/registration', {
-			templateUrl: '/Account/Registration',
+			templateUrl: '/Account/Registration.cshtml',
 			controller: RegistrationController
 		})
         .when('/topics', {

@@ -57,7 +57,15 @@ namespace Forum.Controllers
 		[AllowAnonymous]
 		public ActionResult Login(LoginBindingModel model)
 		{
-			if (!ModelState.IsValid || !WebSecurity.Login(model.Email, model.Password, model.RememberMe))
+			UserHelper.ResetCurrentUserSessionData();
+			if (User.Identity.IsAuthenticated)
+				return new HttpStatusCodeResult(HttpStatusCode.OK);
+
+			if (!ModelState.IsValid )
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Login data is not valid" );
+
+			var isLogin = WebSecurity.Login(model.Email, model.Password, model.RememberMe);
+			if(!isLogin)
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Login failed" );
 
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
@@ -69,6 +77,5 @@ namespace Forum.Controllers
 			WebSecurity.Logout();
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 		}
-
 	}
 }

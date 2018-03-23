@@ -5,15 +5,18 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
-using Forum.Domain;
+using Forum.Core.Services;
 using Forum.Domain.User;
 using Forum.Domain.User.Roles;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebMatrix.WebData;
 
 namespace Forum.Providers
 {
-	public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
+	public class ApplicationOAuthProvider2 : OAuthAuthorizationServerProvider
 	{
 		public const string AllScope = "all";
 
@@ -31,29 +34,24 @@ namespace Forum.Providers
 			// cancel .ASPXAUTH cookie
 			HttpContext.Current.Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
 
-			string roleName;
-			using (var unitOfWork = new UnitOfWork())
+			var userService = new UserService();
+			var user = userService.GetUserByEmail(context.UserName);
+			if (user == null)
 			{
-				var userRepository = new UserRepository(unitOfWork);
-				var user = userRepository.GetByEmail(context.UserName);
-				if (user == null)
-				{
-					throw new Exception("Пользователя с email " + context.UserName + " нет в базе");
-				}
-
-				//try
-				//{
-				//	LoginHelper.LoginChecks(user);
-				//}
-				//catch (Exception ex)
-				//{
-				//	context.SetError("invalid_grant", ex.Message);
-				//	return Task.FromResult<object>(null);
-				//}
-
-				roleName = Enum.GetName(typeof(RoleType), user.RoleId);
+				throw new Exception($"User not found at current login = [{context.UserName}]");
 			}
 
+			try
+			{
+				if (user.LockoutEnabled.HasValue && user.LockoutEnabled.Value )
+					throw new Exception("Account is lockout");
+			}
+			catch (Exception ex){
+				context.SetError("invalid_grant", ex.Message);
+				return Task.FromResult<object>(null);
+			}
+
+			var roleName = Enum.GetName(typeof(RoleType), user.RoleId);
 			var identity = new ClaimsIdentity(
 				new GenericIdentity(context.UserName, OAuthDefaults.AuthenticationType),
 				new Claim[] {
@@ -76,18 +74,24 @@ namespace Forum.Providers
 			return Task.FromResult<object>(null);
 		}
 
-		/// <summary>
-		/// Validate client authentication.
-		/// </summary>
-		/// <param name="context"></param>
-		/// <returns></returns>
-		/// <remarks>We must overwrite this method while the default implementation does not validate the context
-		/// and the request will be rejected.</remarks>
 		public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
 		{
-			// Our client does not require authentication, hence mark the context as validated unconditionally.
-			context.Validated();
+			// Resource owner password credentials does not provide a client ID.
+			if (context.ClientId == null)
+			{
+				context.Validated();
+			}
+
 			return Task.FromResult<object>(null);
+		}
+
+		public static AuthenticationProperties CreateProperties(string userName)
+		{
+			IDictionary<string, string> data = new Dictionary<string, string>
+			{
+				{ "userName", userName }
+			};
+			return new AuthenticationProperties(data);
 		}
 	}
 }

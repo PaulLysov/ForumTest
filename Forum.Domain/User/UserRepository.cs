@@ -29,5 +29,10 @@ namespace Forum.Domain.User
 		{
 			return DataContext.Users.Where(user => user.Id == userId).Select(user => user.RoleId).First();
 		}
+
+		public UserProfile GetByEmail(string email)
+		{
+			return DataContext.Users.FirstOrDefault(x => x.Email == email);
+		}
 	}
 }
