@@ -1,4 +1,4 @@
-﻿var TopicsController = function ($scope, TopicsService) {
+﻿var TopicsController = function($scope, $location, TopicsService) {
 
 	$scope.filter = {
 		TopicName: '',
@@ -30,4 +30,4 @@
 		});
 	}
 }
-TopicsController.$inject = ['$scope', 'TopicsService'];
+TopicsController.$inject = ['$scope', '$location', 'TopicsService'];

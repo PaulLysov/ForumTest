@@ -4,7 +4,7 @@
 AngularMVCApp.controller('LoginController', LoginController);
 AngularMVCApp.controller('RegistrationController', RegistrationController);
 AngularMVCApp.controller('TopicsController', TopicsController);
-AngularMVCApp.controller('TopicMessagesController', TopicMessagesController);
+AngularMVCApp.controller('TopicMessageController', TopicMessageController);
 AngularMVCApp.controller('UsersController', UsersController);
 
 //factories
@@ -32,7 +32,7 @@ var configFunction = function ($routeProvider, $httpProvider) {
 		})
 		.when('/showTopic/:id', {
 		templateUrl: '/TopicMessages/Index',
-		controller: TopicMessagesController
+		controller: TopicMessageController
 		})
 		.when('/users', {
 			templateUrl: '/users/list'
