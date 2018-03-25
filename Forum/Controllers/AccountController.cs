@@ -75,7 +75,7 @@ namespace Forum.Controllers
 		{
 			UserHelper.ResetCurrentUserSessionData();
 			WebSecurity.Logout();
-			return new HttpStatusCodeResult(HttpStatusCode.OK);
+			return RedirectToAction("Index", "Topics");
 		}
 	}
 }

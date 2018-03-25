@@ -235,8 +235,9 @@
     <Compile Include="Attributes\RightCheckAttribute.cs" />
     <Compile Include="Attributes\RoleCheckAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
-    <Compile Include="ApiControllers\TopicsController.cs" />
+    <Compile Include="ApiControllers\TopicController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -257,8 +258,10 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Controllers\RegistrationController.js" />
     <Content Include="Scripts\Controllers\LoginController.js" />
-    <Content Include="Scripts\Controllers\UsersPageController.js" />
+    <Content Include="Scripts\Controllers\TopicMessageController.js" />
+    <Content Include="Scripts\Controllers\UsersController.js" />
     <Content Include="Scripts\Factories\AuthHttpResponseInterceptor.js" />
+    <Content Include="Scripts\Factories\UserFactory.js" />
     <Content Include="Scripts\Factories\TopicsFactory.js" />
     <Content Include="Scripts\Factories\LoginFactory.js" />
     <Content Include="Scripts\Factories\RegistrationFactory.js" />
@@ -1087,10 +1090,11 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Topics\Index.cshtml" />
-    <Content Include="Views\Topics\Topic.cshtml" />
     <Content Include="Views\Account\Registration.cshtml" />
     <Content Include="Views\Users\List.cshtml" />
-    <Content Include="Views\Topics\TopicAdd.cshtml" />
+    <Content Include="Views\Topics\AddTopic.cshtml" />
+    <None Include="Views\Messages\ShowTopic.cshtml" />
+    <None Include="Views\Users\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

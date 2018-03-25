@@ -1,0 +1,17 @@
+﻿<h4>Add new Topic</h4>
+<div class="row">
+	<form class="form" ng-submit="addTopic()">
+
+		<label for="name">Topic name:</label>
+		<input type="text" ng-model="topicForm.name" id="name" required />
+
+		<label for="message">Message:</label>
+		<input rows="2" id="message" ng-model="topicForm.message" required />
+
+		<button type="submit">Add new Topic</button>
+
+		<div class="row error" ng-if="topicForm.errMsg!=''">
+			{{topicForm.errMsg}}
+		</div>
+	</form>
+</div>

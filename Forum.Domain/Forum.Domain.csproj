@@ -72,6 +72,7 @@
     <Compile Include="Base\BaseEntity.cs" />
     <Compile Include="Base\BaseEntityRepository.cs" />
     <Compile Include="DataContext.cs" />
+    <Compile Include="Dictionary\DictionaryRepository.cs" />
     <Compile Include="Dictionary\TopicType.cs" />
     <Compile Include="Migrations\201803221904422_TheBeginning.cs" />
     <Compile Include="Migrations\201803221904422_TheBeginning.Designer.cs">

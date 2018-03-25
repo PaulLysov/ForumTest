@@ -26,7 +26,7 @@
 			<div>
 				<ul class="nav navbar-nav">
 					<li>@Html.ActionLink("Forum", "Index", "Topics")</li>
-					@if (WebSecurity.IsAuthenticated && UserHelper.CurrentUserId > 0 && UserHelper.UserRole == RoleType.Admin)
+					@if (WebSecurity.IsAuthenticated && UserHelper.UserRole == RoleType.Admin)
 					{
 						<li>@Html.ActionLink("Users", "List", "Users")</li>
 					}
@@ -43,6 +43,7 @@
 					}
 					else
 					{
+						<li>@Html.ActionLink("Hi, " + WebSecurity.CurrentUserName, "Edit", "Users")</li>
 						<li>@Html.ActionLink("Logout", "Logout", "Account")</li>
 					}
 				</ul>

@@ -10,8 +10,10 @@ namespace Forum.Domain.Migrations
 			Sql("Insert into Roles (Name,Description) Values('Admin', 'Admin')");
 			Sql("Insert into Roles (Name,Description) Values('Moderator', 'Moderator')");
 			Sql("Insert into Roles (Name,Description) Values('User', 'User')");
+
+			Sql("Insert into Dict_TopicTypes (Name) Values('Default theme')");
         }
-        
+
         public override void Down()
         {
         }

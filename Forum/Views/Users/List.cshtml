@@ -4,5 +4,24 @@
 
 <h2>Users list</h2>
 
-<input type="text" ng-model="helloAngular" />
-<h1>{{helloAngular}}</h1>
+<div class="row">
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Email</th>
+			<th>Login</th>
+			<th>Registration date</th>
+			<th>Actions</th>
+		</tr>
+		<tr ng-repeat="user as usersList">
+			<td>{{user.id}}</td>
+			<td>{{user.email}}</td>
+			<td>{{user.login}}</td>
+			<td>{{user.creationDateTime}}</td>
+			<td>
+				<button ng-if="!user.locoutEnabled" ng-click="blockUser(user.id)">Block</button>
+				<button ng-if="user.locoutEnabled" ng-click="unblockUser(user.id)">Unblock</button>
+			</td>
+		</tr>
+	</table>
+</div>

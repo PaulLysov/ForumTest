@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\TopicMessages\TopicMessageViewModel.cs" />
     <Compile Include="Models\Topics\TopicFilter.cs" />
     <Compile Include="Models\Topics\TopicItemViewModel.cs" />
     <Compile Include="Models\Topics\TopicsViewModel.cs" />

@@ -27,6 +27,9 @@ namespace Forum.Domain.User
 		/// <returns>id role</returns>
 		public int GetUserRoleId(int userId)
 		{
+			if (userId < 1)
+				return (int) RoleType.User;
+
 			return DataContext.Users.Where(user => user.Id == userId).Select(user => user.RoleId).First();
 		}
 

@@ -1,12 +1,10 @@
-﻿var TopicsController = function ($scope, TopicsService) {
+﻿var TopicMessageController = function ($scope, TopicsService) {
 
-	$scope.filter = {
-		TopicName: '',
-		TopicType: 1
-	};
+	$scote.topicId = null;
 
-	$scope.topicForm = {
-		name: '',
+
+	$scope.messageForm = {
+
 		message: '',
 		errMsg: ''
 	};
@@ -30,4 +28,4 @@
 		});
 	}
 }
-TopicsController.$inject = ['$scope', 'TopicsService'];
+TopicMessageController.$inject = ['$scope', '$http', 'TopicsService'];

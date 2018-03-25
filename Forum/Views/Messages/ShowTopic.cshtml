@@ -1,0 +1,20 @@
+﻿@model dynamic
+
+@{
+	Layout = "../Shared/_Layout.cshtml";
+}
+
+<h2>Topic: {{TopicName}}</h2>
+
+<table>
+	<tr>
+		<th>Message</th>
+		<th>User</th>
+		<th>Creation time</th>
+	</tr>
+	<tr ng-repeat="entry as messagesList">
+		<td>{{entry.Message}}</td>
+		<td>{{entry.User}}</td>
+		<td>{{entry.CreationDateTime}}</td>
+	</tr>
+</table>

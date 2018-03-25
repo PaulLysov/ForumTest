@@ -1,63 +1,41 @@
 ﻿//get topic list 
-var TopicsListFactory = function ($http, $q) {
+var TopicsService = function ($http, $q) {
 
-	return function () {
+	return {
+		getTopicsList: function (filter) {
 
-		var deferredObject = $q.defer();
+			var deferredObject = $q.defer();
 
-		var successFunc = function (data) {
-			if (data == "True") {
-				deferredObject.resolve({ success: true });
-			} else {
-				deferredObject.resolve({ success: false });
-			}
-		};
+			$http.get('/api/Topic/GetTopicsByFilter', {filter: filter}).then(
+			function success(response) {
+				deferredObject.resolve(response.data);
+			},
+			function error() {
+				deferredObject.resolve(response.status);
+			});
 
-		var errorFunc = function () {
-			deferredObject.resolve({ success: false });
-		};
+			return deferredObject.promise;
+		},
+		addNewTopic: function (name, message) {
+			var deferredObject = $q.defer();
+			$http.post(
+				'/Topics/AddTopic',
+				{
+					name: name,
+					message: message
+				}
+			).then(
+			function success(response) {
+				deferredObject.resolve(response.data);
+			},
+			function error(ex) {
+				deferredObject.resolve(response.status);
+			});
 
-		$http.post(
-            '/api/Topic/GetTopicsByFilter', {
-            	TopicName: name,
-            	TopicType: type
-            }
-        ).then(successFunc, errorFunc);
-
-		return deferredObject.promise;
+			return deferredObject.promise;
+		}
 	}
 }
-TopicsListFactory.$inject = ['$http', '$q'];
+TopicsService.$inject = ['$http', '$q'];
 
-
-//add new topic 
-var AddTopicFactory = function ($http, $q) {
-	return function () {
-
-		var deferredObject = $q.defer();
-
-		var successFunc = function (data) {
-			if (data == "True") {
-				deferredObject.resolve({ success: true });
-			} else {
-				deferredObject.resolve({ success: false });
-			}
-		};
-
-		var errorFunc = function () {
-			deferredObject.resolve({ success: false });
-		};
-
-		$http.post(
-            '/api/Topic/GetTopicsByFilter', {
-            	TopicName: name,
-            	TopicType: type
-            }
-        ).then(successFunc, errorFunc);
-
-		return deferredObject.promise;
-	}
-}
-
-AddTopicFactory.$inject = ['$http', '$q'];
 

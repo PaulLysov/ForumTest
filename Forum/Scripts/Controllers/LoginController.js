@@ -1,9 +1,8 @@
-﻿var LoginController = function ($scope, $routeParams, $location, LoginFactory) {
+﻿var LoginController = function ($scope, $window, LoginFactory) {
 	$scope.loginForm = {
 		email: '',
 		password: '',
 		rememberMe: false,
-		returnUrl: $routeParams.returnUrl,
 		loginFailure: false
 	};
 
@@ -11,11 +10,7 @@
 		var result = LoginFactory($scope.loginForm.email, $scope.loginForm.password, $scope.loginForm.rememberMe);
 		result.then(function (result) {
 			if (result.success) {
-				if ($scope.loginForm.returnUrl == undefined) {
-					$location.path('/topics');
-				} else {
-					$location.path($scope.loginForm.returnUrl);
-				}
+				$window.location.pathname = '';
 			} else {
 				$scope.loginForm.loginFailure = true;
 			}
@@ -23,4 +18,4 @@
 	}
 }
 
-LoginController.$inject = ['$scope', '$routeParams', '$location', 'LoginFactory'];
+LoginController.$inject = ['$scope', '$window', 'LoginFactory'];

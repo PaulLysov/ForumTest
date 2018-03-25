@@ -9,7 +9,7 @@ using Serilog;
 
 namespace Forum.Core.Services
 {
-	public class UserService:ServiceBase
+	public class UserService : ServiceBase
 	{
 		public List<UserProfileViewModel> GetUsersByFilter()
 		{
@@ -19,13 +19,17 @@ namespace Forum.Core.Services
 				Id = x.Id,
 				RoleId = x.RoleId,
 				Email = x.Email,
-				Login = x.Login
-			} ).ToList();
+				Login = x.Login,
+				CreationDateTime = x.CreationDateTime,
+				FirstName = x.FirstName,
+				LastName = x.LastName,
+				LockoutEnabled = x.LockoutEnabled
+			}).ToList();
 		}
 
 		public UserProfile GetUserByEmail(string mail)
 		{
-			return new UserRepository(UnitOfWork).GetQuery().FirstOrDefault(x =>x.Email.Contains(mail));
+			return new UserRepository(UnitOfWork).GetQuery().FirstOrDefault(x => x.Email.Contains(mail));
 		}
 
 		public UserProfile GetUserById(int userId)
@@ -42,10 +46,10 @@ namespace Forum.Core.Services
 					Login = user.Email,
 					Email = user.Email,
 					CreationDateTime = DateTime.Now,
-					RoleId = (int) roleType
+					RoleId = (int)roleType
 				};
 
-				
+
 				new UserRepository(UnitOfWork).AddOrUpdate(entity);
 				UnitOfWork.SaveChanges();
 
@@ -57,7 +61,37 @@ namespace Forum.Core.Services
 				UnitOfWork.Dispose();
 				return false;
 			}
-			
+
+		}
+
+
+		/// <summary>
+		/// block and unblock user for system
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="lockoutEnabled"></param>
+		/// <returns></returns>
+		public bool LockoutUser(int id,  bool lockoutEnabled)
+		{
+			try
+			{
+				var repo = new UserRepository(UnitOfWork);
+				var entity = repo.GetById(id);
+				if (entity == null || entity.LockoutEnabled.HasValue && entity.LockoutEnabled.Value == lockoutEnabled)
+					return false;
+
+				entity.LockoutEnabled = lockoutEnabled;
+
+				repo.AddOrUpdate(entity);
+				UnitOfWork.SaveChanges();
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Log.Logger.Error(ex, $"[{CurrentClassName}][BlockUser] Error at blocking user, userId = [{id}]");
+				return false;
+			}
 		}
 	}
 }

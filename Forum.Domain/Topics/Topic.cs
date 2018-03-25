@@ -10,6 +10,7 @@ namespace Forum.Domain.Topics
 	{
 		public string Name { get; set; }
 
+		//topic type disabled
 		public int TypeId { get; set; }
 		public TopicType Type { get; set; }
 

@@ -7,7 +7,7 @@ using Forum.Domain.Base;
 
 namespace Forum.Domain.Topics
 {
-	public class TopicMessageRepository:BaseEntityRepository<Topic>
+	public class TopicMessageRepository:BaseEntityRepository<TopicMessage>
 	{
 		public TopicMessageRepository(UnitOfWork unitOfWork) : base(unitOfWork)
 		{
